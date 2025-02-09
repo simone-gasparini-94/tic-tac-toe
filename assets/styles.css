@@ -155,10 +155,29 @@ button:hover {
     background-color: var(--off-black);
 }
 
-.cell.cross:before {
+.cell.cross::before {
     transform: rotate(45deg);
 }
 
-.cell.cross:after {
+.cell.cross::after {
     transform: rotate(-45deg);
+}
+
+.cell.circle::before,
+.cell.circle::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.circle::before {
+    width: var(--mark-size);
+    height: var(--mark-size);
+    background-color: var(--off-black);
+}
+
+.cell.circle:after {
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: var(--off-white);
 }
