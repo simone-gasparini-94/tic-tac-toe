@@ -20,11 +20,25 @@ const Players = (function() {
         const player2 = namePlayer(inputPlayer2.value || "Player 2", "circle");
         console.log(player1, player2);
         return player1, player2;
-
     }
 
-    playBtn.addEventListener("click", hideSelector);
-    playBtn.addEventListener("click", getPlayers);
+    playBtn.addEventListener("click", () => {
+        hideSelector();
+        getPlayers();
+        Board.showBoard();
+    })
 })();
+
+const Board = (function() {
+    const boardContainer = document.querySelector(".board-container");
+
+    function showBoard() {
+        boardContainer.classList.remove("hidden");
+    }
+
+    return {
+        showBoard,
+    }
+})()
 
 
