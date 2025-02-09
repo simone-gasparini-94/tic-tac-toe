@@ -4,6 +4,8 @@ const Players = (function() {
     const inputPlayer1 = document.querySelector("#player1");
     const inputPlayer2 = document.querySelector("#player2");
 
+    let player1, player2, currentPlayer
+
     function hideSelector() {
         playerSelector.classList.add("hidden");
     }
@@ -11,40 +13,62 @@ const Players = (function() {
     function namePlayer(name, marker) {
         return {
             name,
-            marker
+            marker,
         }
     }
 
-    function getPlayers() {
-        const player1 = namePlayer(inputPlayer1.value || "Player 1", "cross");
-        const player2 = namePlayer(inputPlayer2.value || "Player 2", "circle");
-        console.log(player1, player2);
-        return player1, player2;
+    function setPlayers() {
+        player1 = namePlayer(inputPlayer1.value || "Player 1", "cross");
+        player2 = namePlayer(inputPlayer2.value || "Player 2", "circle");
+        currentPlayer = player1;
+    }
+
+    function switchPlayers() {
+        currentPlayer = currentPlayer === player1 ? player2 : player1;
+    }
+
+
+    function getCurrentPlayer() {
+        return currentPlayer;
     }
 
     playBtn.addEventListener("click", () => {
         hideSelector();
-        getPlayers();
+        setPlayers();
         Board.showBoard();
-    })
+    });
+
+    return {
+        getCurrentPlayer,
+        switchPlayers,
+    }
 })();
 
 const Board = (function() {
     const boardContainer = document.querySelector(".board-container");
-    const cells = document.querySelectorAll("[data-cell");
+    const cells = document.querySelectorAll("[data-cell]");
     cells.forEach((cell) => cell.addEventListener("click", addMarker, {once:true}));
+
 
     function showBoard() {
         boardContainer.classList.remove("hidden");
     }
 
-    function addMarker() {
-        console.log("click");
+    function addMarker(event) {
+        let cell = event.target;
+        Players.getCurrentPlayer();
+        cell.classList.add(Players.getCurrentPlayer().marker);
+        Players.switchPlayers();
     }
 
     return {
         showBoard,
     }
-})()
+})();
+
+const Game = (function() {
+
+
+})();
 
 
