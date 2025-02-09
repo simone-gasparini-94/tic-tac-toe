@@ -12,7 +12,7 @@
     --off-white: hsl(0, 0%, 88%);
 
     --cell-size: 100px;
-    --mark-size: calc(var(--cell-size) * .8)
+    --mark-size: calc(var(--cell-size) * .9)
 }
 
 body {
@@ -120,6 +120,8 @@ button:hover {
     align-items: center;
 
     position: relative;
+
+    cursor: pointer;
 }
 
 .cell:nth-of-type(1),

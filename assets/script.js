@@ -31,9 +31,15 @@ const Players = (function() {
 
 const Board = (function() {
     const boardContainer = document.querySelector(".board-container");
+    const cells = document.querySelectorAll("[data-cell");
+    cells.forEach((cell) => cell.addEventListener("click", addMarker, {once:true}));
 
     function showBoard() {
         boardContainer.classList.remove("hidden");
+    }
+
+    function addMarker() {
+        console.log("click");
     }
 
     return {
