@@ -51,13 +51,30 @@ const Board = (function() {
         boardContainer.classList.remove("hidden");
     }
 
+   function hideBoard() {
+    boardContainer.classList.add("hidden");
+   }
+
+   function resetBoard(cells) {
+    for(let i = 0; i < cells.length; i++) {
+        cells[i].classList.remove("circle");
+        cells[i].classList.remove("cross");
+    }
+   }
+
     return {
         showBoard,
+        hideBoard,
+        resetBoard,
     }
 })();
 
 const Game = (function() {
     const cells = document.querySelectorAll("[data-cell]");
+    const messageContainer = document.querySelector(".message-container");
+    const message = document.querySelector(".message");
+    const restartBtn = document.querySelector("#restart");
+
     cells.forEach((cell) => cell.addEventListener("click", handleClick, {once:true}));
 
     function handleClick(event) {
@@ -85,7 +102,7 @@ const Game = (function() {
             if  (cells[a].classList.contains(Players.getCurrentPlayer().marker) &&
                  cells[b].classList.contains(Players.getCurrentPlayer().marker) &&
                  cells[c].classList.contains(Players.getCurrentPlayer().marker)) {
-                    console.log(`${Players.getCurrentPlayer().name} wins`);
+                    showMessage(`${Players.getCurrentPlayer().name} WINS!`);
                  }
         }
     }
@@ -96,9 +113,27 @@ const Game = (function() {
                 return;
             }
         }
-        console.log("Draw");
+        showMessage("IT'S A DRAW!");
     }
 
+    function showMessage(messageText) {
+        Board.hideBoard();
+        messageContainer.classList.remove("hidden");
+        message.textContent = messageText;
+    }
+
+    function hideMessage() {
+        messageContainer.classList.add("hidden");
+    }
+
+    function restartGame() {
+        Board.resetBoard(cells);
+        Board.showBoard();
+        hideMessage();
+
+    }
+
+    restartBtn.addEventListener("click", restartGame);
 
 })();
 

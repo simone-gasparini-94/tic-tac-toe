@@ -25,7 +25,9 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.player-selector {
+.player-selector,
+.board-container,
+.message-container {
     height: 100vh;
 
     display: flex;
@@ -34,10 +36,6 @@ body {
     align-items: center;
 
     gap: 24px;
-}
-
-.player-selector.hidden {
-    display: none;
 }
 
 .players-container {
@@ -91,7 +89,9 @@ button:hover {
 }
 
 
-.board-container.hidden {
+.player-selector.hidden,
+.board-container.hidden,
+.message-container.hidden {
     display: none;
 }
 
