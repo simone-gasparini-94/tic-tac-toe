@@ -59,14 +59,16 @@ const Players = (function() {
 })();
 
 const Board = (function() {
-    const boardContainer = document.querySelector(".board-container");
+    const cacheDom = {
+        boardContainer: document.querySelector(".board-container"),
+    }
 
     function showBoard() {
-        boardContainer.classList.remove("hidden");
+        cacheDom.boardContainer.classList.remove("hidden");
     }
 
    function hideBoard() {
-    boardContainer.classList.add("hidden");
+        cacheDom.boardContainer.classList.add("hidden");
    }
 
    function resetBoard(cells) {
@@ -84,26 +86,28 @@ const Board = (function() {
 })();
 
 const Game = (function() {
-    const cells = document.querySelectorAll("[data-cell]");
-    const messageContainer = document.querySelector(".message-container");
-    const message = document.querySelector(".message");
-    const restartBtn = document.querySelector("#restart");
-    const exitBtn = document.querySelector("#exit");
+    const cacheDom = {
+        cells: document.querySelectorAll("[data-cell]"),
+        messageContainer: document.querySelector(".message-container"),
+        message: document.querySelector(".message"),
+        restartBtn: document.querySelector("#restart"),
+        exitBtn:document.querySelector("#exit"),
+    }
 
     function init() {
-        cells.forEach((cell) => cell.addEventListener("click", handleClick, {once:true}));
+        cacheDom.cells.forEach((cell) => cell.addEventListener("click", handleClick, {once:true}));
     }
 
     function resetCellListeners() {
-        cells.forEach((cell) => cell.removeEventListener("click", handleClick));
+        cacheDom.cells.forEach((cell) => cell.removeEventListener("click", handleClick));
     }
 
     function handleClick(event) {
         const cell = event.target;
         Players.getCurrentPlayer();
         cell.classList.add(Players.getCurrentPlayer().marker);
-        checkWin(cells);
-        checkDraw(cells);
+        checkWin(cacheDom.cells);
+        checkDraw(cacheDom.cells);
         Players.switchPlayers();
     }
 
@@ -139,18 +143,18 @@ const Game = (function() {
 
     function showMessage(messageText) {
         Board.hideBoard();
-        messageContainer.classList.remove("hidden");
-        message.textContent = messageText;
+        cacheDom.messageContainer.classList.remove("hidden");
+        cacheDom.message.textContent = messageText;
     }
 
     function hideMessage() {
-        messageContainer.classList.add("hidden");
+        cacheDom.messageContainer.classList.add("hidden");
     }
 
     function restartGame() {
         hideMessage();
         Board.showBoard();
-        Board.resetBoard(cells);
+        Board.resetBoard(cacheDom.cells);
         resetCellListeners();
         init();
     }
@@ -159,12 +163,12 @@ const Game = (function() {
         hideMessage();
         Players.showSelector();
         Players.resetInputs();
-        Board.resetBoard(cells);
+        Board.resetBoard(cacheDom.cells);
         resetCellListeners();
     }
 
-    restartBtn.addEventListener("click", restartGame);
-    exitBtn.addEventListener("click", exitGame);
+    cacheDom.restartBtn.addEventListener("click", restartGame);
+    cacheDom.exitBtn.addEventListener("click", exitGame);
 
     return {
         init,
