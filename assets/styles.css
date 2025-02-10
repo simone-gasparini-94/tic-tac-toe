@@ -108,12 +108,12 @@ button:hover {
 #exit {
     padding: 1em 3em;
 
-    background-color: var(--light-grey);
+    background-color: var(--off-white);
     color: var(--off-black);
 }
 
 #exit:hover {
-    background-color: var(--grey);
+    background-color: var(--light-grey);
 }
 
 
