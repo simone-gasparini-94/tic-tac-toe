@@ -74,6 +74,21 @@ input:focus {
     border: 1px solid var(--off-black);
 }
 
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    background-color: transparent !important;
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+    color: var(--off-black) !important;
+    -webkit-text-fill-color: var(--off-black) !important;
+}
+
+input,
+textarea,
+select {
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 button {
     padding: 1.4em 4.2em;
 
