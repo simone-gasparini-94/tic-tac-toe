@@ -75,7 +75,7 @@ input:focus {
 }
 
 button {
-    padding: 1.6em 3.6em;
+    padding: 1.4em 4.2em;
 
     background-color: var(--dark-grey);
     color: var(--off-white);
@@ -86,6 +86,17 @@ button {
 
 button:hover {
     background-color: var(--off-black);
+}
+
+#exit {
+    padding: 1em 3em;
+
+    background-color: var(--light-grey);
+    color: var(--off-black);
+}
+
+#exit:hover {
+    background-color: var(--grey);
 }
 
 
@@ -182,4 +193,9 @@ button:hover {
     width: calc(var(--mark-size) * .7);
     height: calc(var(--mark-size) * .7);
     background-color: var(--off-white);
+}
+
+.message {
+    font-size: 64px;
+    font-weight: 600;
 }

@@ -6,6 +6,10 @@ const Players = (function() {
 
     let player1, player2, currentPlayer;
 
+    function showSelector() {
+        playerSelector.classList.remove("hidden");
+    }
+
     function hideSelector() {
         playerSelector.classList.add("hidden");
     }
@@ -15,6 +19,11 @@ const Players = (function() {
             name,
             marker,
         }
+    }
+
+    function resetInputs() {
+        inputPlayer1.value = "";
+        inputPlayer2.value = "";
     }
 
     function setPlayers() {
@@ -36,9 +45,12 @@ const Players = (function() {
         hideSelector();
         setPlayers();
         Board.showBoard();
+        Game.init();
     });
 
     return {
+        showSelector,
+        resetInputs,
         getCurrentPlayer,
         switchPlayers,
     }
@@ -74,8 +86,11 @@ const Game = (function() {
     const messageContainer = document.querySelector(".message-container");
     const message = document.querySelector(".message");
     const restartBtn = document.querySelector("#restart");
+    const exitBtn = document.querySelector("#exit");
 
-    cells.forEach((cell) => cell.addEventListener("click", handleClick, {once:true}));
+    function init() {
+        cells.forEach((cell) => cell.addEventListener("click", handleClick, {once:true}));
+    }
 
     function handleClick(event) {
         const cell = event.target;
@@ -102,7 +117,7 @@ const Game = (function() {
             if  (cells[a].classList.contains(Players.getCurrentPlayer().marker) &&
                  cells[b].classList.contains(Players.getCurrentPlayer().marker) &&
                  cells[c].classList.contains(Players.getCurrentPlayer().marker)) {
-                    showMessage(`${Players.getCurrentPlayer().name} WINS!`);
+                    showMessage(`${Players.getCurrentPlayer().name.toUpperCase()} WINS!`);
                  }
         }
     }
@@ -127,13 +142,25 @@ const Game = (function() {
     }
 
     function restartGame() {
-        Board.resetBoard(cells);
-        Board.showBoard();
         hideMessage();
+        Board.showBoard();
+        Board.resetBoard(cells);
+        init();
+    }
 
+    function exitGame() {
+        hideMessage();
+        Players.showSelector();
+        Players.resetInputs();
+        Board.resetBoard(cells);
     }
 
     restartBtn.addEventListener("click", restartGame);
+    exitBtn.addEventListener("click", exitGame);
+
+    return {
+        init,
+    }
 
 })();
 
