@@ -8,6 +8,10 @@ const Players = (function() {
 
     let player1, player2, currentPlayer;
 
+    function bindEvents() {
+        cacheDom.playBtn.addEventListener("click", startGame);
+    }
+
     function showSelector() {
         cacheDom.playerSelector.classList.remove("hidden");
     }
@@ -43,12 +47,14 @@ const Players = (function() {
         return currentPlayer;
     }
 
-    cacheDom.playBtn.addEventListener("click", () => {
+    function startGame() {
         hideSelector();
         setPlayers();
         Board.showBoard();
         Game.init();
-    });
+    };
+
+    bindEvents();
 
     return {
         showSelector,
@@ -94,12 +100,18 @@ const Game = (function() {
         exitBtn:document.querySelector("#exit"),
     }
 
-    function init() {
-        cacheDom.cells.forEach((cell) => cell.addEventListener("click", handleClick, {once:true}));
+    function bindEvents() {
+        cacheDom.cells.forEach(cell => cell.addEventListener("click", handleClick, { once: true }));
+        cacheDom.restartBtn.addEventListener("click", restartGame);
+        cacheDom.exitBtn.addEventListener("click", exitGame);
     }
 
-    function resetCellListeners() {
+    function unbindEvents() {
         cacheDom.cells.forEach((cell) => cell.removeEventListener("click", handleClick));
+    }
+
+    function init() {
+        bindEvents();
     }
 
     function handleClick(event) {
@@ -155,7 +167,7 @@ const Game = (function() {
         hideMessage();
         Board.showBoard();
         Board.resetBoard(cacheDom.cells);
-        resetCellListeners();
+        unbindEvents();
         init();
     }
 
@@ -164,11 +176,8 @@ const Game = (function() {
         Players.showSelector();
         Players.resetInputs();
         Board.resetBoard(cacheDom.cells);
-        resetCellListeners();
+        unbindEvents();
     }
-
-    cacheDom.restartBtn.addEventListener("click", restartGame);
-    cacheDom.exitBtn.addEventListener("click", exitGame);
 
     return {
         init,
