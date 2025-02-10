@@ -92,6 +92,10 @@ const Game = (function() {
         cells.forEach((cell) => cell.addEventListener("click", handleClick, {once:true}));
     }
 
+    function resetCellListeners() {
+        cells.forEach((cell) => cell.removeEventListener("click", handleClick));
+    }
+
     function handleClick(event) {
         const cell = event.target;
         Players.getCurrentPlayer();
@@ -145,6 +149,7 @@ const Game = (function() {
         hideMessage();
         Board.showBoard();
         Board.resetBoard(cells);
+        resetCellListeners();
         init();
     }
 
@@ -153,6 +158,7 @@ const Game = (function() {
         Players.showSelector();
         Players.resetInputs();
         Board.resetBoard(cells);
+        resetCellListeners();
     }
 
     restartBtn.addEventListener("click", restartGame);
