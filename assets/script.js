@@ -97,7 +97,7 @@ const Game = (function() {
         messageContainer: document.querySelector(".message-container"),
         message: document.querySelector(".message"),
         restartBtn: document.querySelector("#restart"),
-        exitBtn:document.querySelector("#exit"),
+        exitBtn: document.querySelector("#exit"),
     }
 
     function bindEvents() {
